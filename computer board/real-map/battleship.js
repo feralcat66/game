@@ -12,34 +12,38 @@ const computerGameBoardContainer = document.getElementById('computer-gameboard')
 // make the grid columns and rows
 for (i = 0; i < cols; i++) {
     for (j = 0; j < rows; j++){
-        for (k = 0; k < cols; k++) {
-            for (l = 0; l < rows; l++) {
-    
-		
-		// create a new div HTML element for each grid square and make it the right size
-        
-                const square = document.createElement('div');
-                gameBoardContainer.appendChild(square);
-                const square2 = document.createElement('div');
-                computerGameBoardContainer.appendChild(square2);
 
-    // give each div element a unique id based on its row and column, like "s00"
-                square.id = 's' + j + i;	
-                square2.id = 's' + l + k;		
+        
+        
+        // create a new div HTML element for each grid square and make it the right size
+        
+        const square = document.createElement('div');
+        gameBoardContainer.appendChild(square);
+        
+        // give each div element a unique id based on its row and column, like "s00"
+        square.id = 's' + j + i;	
 		
 		// set each grid square's coordinates: multiples of the current row or column number
-                const topPosition = j * squareSize;
-                const leftPosition = i * squareSize;	
-                const computerTopPosition = l * squareSize;
-                const computerLeftPosition = k * squareSize;		
+        const topPosition = j * squareSize;
+        const leftPosition = i * squareSize;	
 		
 		// use CSS absolute positioning to place each grid square on the page
-                square.style.top = topPosition + 'px';
-                square.style.left = leftPosition + 'px';		
-                square2.style.top = computerTopPosition + 'px';
-                square2.style.left = computerLeftPosition + 'px';					
-            }
-        }
+        square.style.top = topPosition + 'px';
+        square.style.left = leftPosition + 'px';		
+    }
+}
+for (k = 0; k < cols; k++) {
+    for (l = 0; l < rows; l++) {
+        const square2 = document.createElement('div');
+        computerGameBoardContainer.appendChild(square2);
+        
+        square2.id = 'p' + l + k;	
+        
+        const computerTopPosition = l * squareSize;
+        const computerLeftPosition = k * squareSize;		
+        
+        square2.style.top = computerTopPosition + 'px';
+        square2.style.left = computerLeftPosition + 'px';
     }
 }
 
@@ -104,9 +108,6 @@ let computerRandomLocation5 = [1, Math.floor(Math.random() * 6)];
 
 
 
-// if (randomLocation3, randomLocation4 === randomLocation5, randomLocation6 || randomLocation3, randomLocation4 === randomLocation6, randomLocation7 || randomLocation3, randomLocation4 === randomLocation9, randomLocation10 || randomLocation3, randomLocation4 === randomLocationX, randomLocationY)Math.floor(Math.random() * 3);
-
-
 for (let k = 0; k < gameBoard.length; k++);
 
 let boatOne = [ 
@@ -154,22 +155,22 @@ let boatFive = [
 
 ];
 
-function compareCoord(array1, array2) {
-    if (array1[0] !== array2[0] && array1[1] !== array2[1]) {
-        return true;
-    }
-    else false;
-}
+// function compareCoord(array1, array2) {
+//     if (array1[0] !== array2[0] && array1[1] !== array2[1]) {
+//         return true;
+//     }
+//     else false;
+// }
 
-while (!compareCoord(randomLocation1, randomLocation2) && !compareCoord(randomLocation2, randomLocation3) && !compareCoord(randomLocation2, randomLocation4)) {
-    randomLocation2 = Math.floor(Math.random() * 6);   
-}
-while (!compareCoord(randomLocation1, randomLocation3) && !compareCoord(randomLocation3, randomLocation4)) {
-    randomLocation3 = Math.floor(Math.random() * 6);
-}
-while (!compareCoord(randomLocation1, randomLocation4)) {
-    randomLocation4 = Math.floor(Math.random() * 6);
-}
+// while (!compareCoord(randomLocation1, randomLocation2) && !compareCoord(randomLocation2, randomLocation3) && !compareCoord(randomLocation2, randomLocation4)) {
+//     randomLocation2 = Math.floor(Math.random() * 6);   
+// }
+// while (!compareCoord(randomLocation1, randomLocation3) && !compareCoord(randomLocation3, randomLocation4)) {
+//     randomLocation3 = Math.floor(Math.random() * 6);
+// }
+// while (!compareCoord(randomLocation1, randomLocation4)) {
+//     randomLocation4 = Math.floor(Math.random() * 6);
+// }
 
 
 console.log(JSON.stringify(gameBoard));
@@ -221,29 +222,10 @@ function fireTorpedo(e) {
                 console.log(addClick);
                 console.log('=======');
                 console.log(addHit);
-            } else if (gameBoard[row][col] > 1) {
-                alert('Stop wasting your torpedos! You already fired at this location.');
+            // } else if (gameBoard[row][col] > 7) {
+            //     alert('Stop wasting your torpedos! You already fired at this location.');
             }		
-        }
-        if (computerBoard[row][col] === 0) {
-            e.target.style.background = '#bbb';
-            // set this square's value to 3 to indicate that they fired and missed
-            computerBoard[row][col] = 7;
-        } else if (computerBoard[row][col] === 1 ||
-            computerBoard[row][col] === 2 || computerBoard[row][col] === 3 || computerBoard[row][col] === 4 || computerBoard[row][col] === 5) {
-            e.target.style.background = 'red';
-            // set this square's value to 2 to indicate the ship has been hit
-            computerBoard[row][col] = 8;
-    
-            if (hitCount === 16) {
-                alert('The computer beat you!');
-           
-            }
-            
-        // if player clicks a square that's been previously hit, let them know
-        } else if (computerBoard[row][col] > 1) {
-            alert('Stop wasting your torpedos! You already fired at this location.');
-        }		
+        }	
     }
 			
 		// if player clicks a square that's been previously hit, let them know
@@ -259,17 +241,15 @@ button.addEventListener('click', () => {
 });
 
 function computerTorpedo() {
-    console.log('fire');
     
     const randomLoc = [Math.floor(Math.random() * 9), Math.floor(Math.random() * 9)];
     const placement = computerBoard[randomLoc[0]][randomLoc[1]];
-    const computerTarg = document.getElementById('s' + randomLoc[0] + randomLoc[1]);
+    const computerTarg = document.getElementById('p' + randomLoc[0] + randomLoc[1]);
   
     if (placement === 0) {
         computerTarg.style.background = '#bbb';
     } else if (placement === 1 ||
         placement === 2 || placement === 3 || placement === 4 || placement === 5) {
         computerTarg.style.background = 'red';
-        console.log(computerTarg);
     }
 }
