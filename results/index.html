@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Result</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <center>
+    <main>
+        <img src="../assets/sunkenship.jpeg" width="500" height="350" alt="result-image">
+        <br>
+        <br>
+        <div class="profile">
+            <img id="avatar" height="50px" width="50px">
+            <br>
+            <br>
+            <span id="username"></span>
+            <br>
+        </div>
+        <p>
+            Your adventure has ended.
+        </p>
+        <p>
+            You won in <span id="clicks"></span> clicks.
+        </p>
+        <p>Accuracy: <span id="accuracy"></span></p>
+        <div>
+            High Scores: [clicks, hits, percentage]
+            <ul id="high-scores"></ul>
+        </div>
+        <p id="story-display"></p>
+        <img id="result-image">
+        <p>
+            <a href="../">Begin again</a>
+        </p>
+    </main>
+    </center>
+    <script type="module" src="../results/results.js"></script>
+    <script type="module" src="../app.js"></script>
+</body>
+</html>
