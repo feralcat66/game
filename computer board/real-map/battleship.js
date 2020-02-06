@@ -11,30 +11,35 @@ const computerGameBoardContainer = document.getElementById('computer-gameboard')
 
 // make the grid columns and rows
 for (i = 0; i < cols; i++) {
-    for (j = 0; j < rows; j++) {
+    for (j = 0; j < rows; j++){
+        for (k = 0; k < cols; k++) {
+            for (l = 0; l < rows; l++) {
+    
 		
 		// create a new div HTML element for each grid square and make it the right size
         
-        const square = document.createElement('div');
-        gameBoardContainer.appendChild(square);
-        const square2 = document.createElement('div');
-        computerGameBoardContainer.appendChild(square2);
+                const square = document.createElement('div');
+                gameBoardContainer.appendChild(square);
+                const square2 = document.createElement('div');
+                computerGameBoardContainer.appendChild(square2);
 
     // give each div element a unique id based on its row and column, like "s00"
-        square.id = 's' + j + i;	
-        square2.id = 's' + j + i;		
+                square.id = 's' + j + i;	
+                square2.id = 's' + l + k;		
 		
 		// set each grid square's coordinates: multiples of the current row or column number
-        const topPosition = j * squareSize;
-        const leftPosition = i * squareSize;	
-        const computerTopPosition = j * squareSize;
-        const computerLeftPosition = i * squareSize;		
+                const topPosition = j * squareSize;
+                const leftPosition = i * squareSize;	
+                const computerTopPosition = l * squareSize;
+                const computerLeftPosition = k * squareSize;		
 		
 		// use CSS absolute positioning to place each grid square on the page
-        square.style.top = topPosition + 'px';
-        square.style.left = leftPosition + 'px';		
-        square2.style.top = computerTopPosition + 'px';
-        square2.style.left = computerLeftPosition + 'px';					
+                square.style.top = topPosition + 'px';
+                square.style.left = leftPosition + 'px';		
+                square2.style.top = computerTopPosition + 'px';
+                square2.style.left = computerLeftPosition + 'px';					
+            }
+        }
     }
 }
 
@@ -170,8 +175,12 @@ while (!compareCoord(randomLocation1, randomLocation4)) {
 console.log(JSON.stringify(gameBoard));
 console.log(JSON.stringify(computerBoard));
 // set event listener for all elements in gameboard, run fireTorpedo function when square is clicked
-gameBoardContainer.addEventListener('click', fireTorpedo, false);
-computerGameBoardContainer.addEventListener('click', fireTorpedo, false);
+gameBoardContainer.addEventListener('click', (e) => {
+    fireTorpedo(e);
+    computerTorpedo();
+
+});
+
 
 // initial code via http://www.kirupa.com/html5/handling_events_for_many_elements.htm:
 function fireTorpedo(e) {
@@ -248,3 +257,19 @@ button.addEventListener('click', () => {
 
     
 });
+
+function computerTorpedo() {
+    console.log('fire');
+    
+    const randomLoc = [Math.floor(Math.random() * 9), Math.floor(Math.random() * 9)];
+    const placement = computerBoard[randomLoc[0]][randomLoc[1]];
+    const computerTarg = document.getElementById('s' + randomLoc[0] + randomLoc[1]);
+  
+    if (placement === 0) {
+        computerTarg.style.background = '#bbb';
+    } else if (placement === 1 ||
+        placement === 2 || placement === 3 || placement === 4 || placement === 5) {
+        computerTarg.style.background = 'red';
+        console.log(computerTarg);
+    }
+}
